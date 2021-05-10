@@ -1,0 +1,6 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "rust-client.channel": "nightly-2020-03-10",
+  "rust.cfg_test": false,
+  "rust.all_targets": false
+}
