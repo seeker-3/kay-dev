@@ -1,0 +1,15 @@
+[package]
+name = "kay-dev-client"
+version = "0.1.0"
+authors = ["Abe <abramabradley@gmail.com>"]
+edition = "2018"
+
+# [lib]
+# crate-type = ["cdylib"]
+[dependencies]
+stdweb = "*"
+# lib = { path = "../lib" }
+# [dependencies.kay]
+# version = "*"
+# default-features = false
+# features = ["browser"]

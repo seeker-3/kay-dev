@@ -1,4 +1,4 @@
-#![allow(clippy::new_without_default)]
+// #![allow(clippy::new_without_default)]
 #![feature(custom_inner_attributes)]
 
 #[macro_use]

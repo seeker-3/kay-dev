@@ -14,3 +14,9 @@ Cargo.lock
 *.pdb
 kay_auto.rs
 scatch.rs
+.parcel-cache
+.cache
+node_modules
+pnpm-lock.yaml
+package-lock.json
+dist

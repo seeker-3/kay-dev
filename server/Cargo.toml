@@ -1,5 +1,5 @@
 [package]
-name = "kay"
+name = "kay-dev-server"
 version = "0.1.0"
 authors = ["Abe <abramabradley@gmail.com>"]
 edition = "2018"
