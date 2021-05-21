@@ -3,48 +3,58 @@ pub use kay_auto::*;
 
 use kay::{ActorSystem, World};
 
+// most basic possible boilerplate
 #[derive(Clone, Compact)]
 pub struct BasicActor {
     id: BasicActorID,
-    count: u8,
 }
 
+// Actor must have creation method or it won't generate
 impl BasicActor {
     pub fn spawn(id: BasicActorID, _: &mut World) -> Self {
-        println!("spawned \"basic actor\"");
-        BasicActor { id, count: 0 }
-    }
-    pub fn increment(&mut self, _: &mut World) {
-        self.count += 1;
-        self.log_info()
-    }
-    pub fn increment_by(&mut self, value: u8, _: &mut World) {
-        self.count += value;
-        self.log_info()
-    }
-    fn log_info(&self) {
-        println!("incremented: {}", self.count);
+        Self { id }
     }
 }
 
+// kay actor needs id field of StructName + ID
+// type will be auto generated
 #[derive(Clone, Compact)]
-pub struct ActorWrapper {
-    id: ActorWrapperID,
-    actor_id: BasicActorID,
+pub struct CounterActor {
+    id: CounterActorID,
+    number: u8,
+    count: u32,
 }
 
-impl ActorWrapper {
-    pub fn spawn(id: ActorWrapperID, actor_id: BasicActorID, _: &mut World) -> Self {
-        println!("spawned \"another \"actor");
-        ActorWrapper { id, actor_id }
+static mut NUMBER_COUNTERS: u8 = 0;
+
+// methods ending in ref mut world will generate kay bindings
+impl CounterActor {
+    // aka new - will generate add_spawn_handler code
+    pub fn spawn(id: CounterActorID, _: &mut World) -> Self {
+        let number = unsafe {
+            NUMBER_COUNTERS += 1;
+            NUMBER_COUNTERS
+        };
+
+        Self {
+            number,
+            id,
+            count: 0,
+        }
     }
-    pub fn increment(&mut self, world: &mut World) {
-        self.actor_id.increment(world);
+    // will generate message_handler
+    pub fn increment(&mut self, value: Option<u32>, _: &mut World) {
+        let value = value.unwrap_or(1);
+        self.count += value;
+        println!(
+            "actor{}\nincrement: {}\ncount: {}\n",
+            self.number, value, self.count
+        );
     }
 }
 
 pub fn setup(system: &mut ActorSystem) {
     system.register::<BasicActor>();
-    system.register::<ActorWrapper>();
+    system.register::<CounterActor>();
     auto_setup(system);
 }

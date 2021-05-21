@@ -1,0 +1,4 @@
+[toolchain]
+# channel = "nightly-2021-03-02"
+# channel = "nightly-2020-03-10"
+channel = "nightly-2020-10-16"
